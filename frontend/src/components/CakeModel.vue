@@ -35,9 +35,13 @@ onMounted(() => {
   scene.add(new THREE.AmbientLight(0xffffff, 0.5));
   scene.add(new THREE.HemisphereLight(0xffffbb, 0x080820, 0.3));
 
+  
   const resize = () => {
-    const width = container.value.clientWidth;
-    const height = container.value.clientHeight;
+    if (!container.value) return;
+    const width = container.value?.clientWidth;
+    const height = container.value?.clientHeight;
+
+     if (width === 0 || height === 0) return;
     renderer.setSize(width, height);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
@@ -61,39 +65,36 @@ onMounted(() => {
       scene.add(cake);
 
       // ฟังก์ชันทำให้โมเดล responsive
-     const fitModelToScreen = () => {
-  const box = new THREE.Box3().setFromObject(cake);
-  const size = box.getSize(new THREE.Vector3());
-  const maxDim = Math.max(size.x, size.y, size.z);
-  const fov = camera.fov * (Math.PI / 180);
+      const fitModelToScreen = () => {
+        const box = new THREE.Box3().setFromObject(cake);
+        const size = box.getSize(new THREE.Vector3());
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const fov = camera.fov * (Math.PI / 180);
 
-  // ระยะกล้องให้โมเดลเกือบเต็ม canvas
-  let cameraDist = (maxDim / 2) / Math.tan(fov / 2);
-  
-  // ปรับ multiplier ให้โมเดลใหญ่ขึ้นเกือบเต็ม
-  cameraDist *= 1.4; // 1.0 = พอดี, >1 = เล็กลง, <1 =ใหญ่ขึ้น
+        // ระยะกล้องให้โมเดลเกือบเต็ม canvas
+        let cameraDist = maxDim / 2 / Math.tan(fov / 2);
 
-  // min/max ระยะสัมพันธ์กับขนาดโมเดล
-  let minDist = maxDim * 0.7; 
+        // ปรับ multiplier ให้โมเดลใหญ่ขึ้นเกือบเต็ม
+        cameraDist *= 1.4; // 1.0 = พอดี, >1 = เล็กลง, <1 =ใหญ่ขึ้น
 
-  if (window.innerWidth <= 480) {
-  // มือถือ → minDist เล็กกว่าปกติ
-  minDist = maxDim * 1.7;
-} 
-  const maxDist = maxDim * 5;
-  cameraDist = Math.min(Math.max(cameraDist, minDist), maxDist);
+        // min/max ระยะสัมพันธ์กับขนาดโมเดล
+        let minDist = maxDim * 0.7;
 
-  // ปรับความสูงกล้องเล็กน้อย
-  const yHeight = Math.min(5, cameraDist * 0.35);
+        if (window.innerWidth <= 480) {
+          // มือถือ → minDist เล็กกว่าปกติ
+          minDist = maxDim * 1.7;
+        }
+        const maxDist = maxDim * 5;
+        cameraDist = Math.min(Math.max(cameraDist, minDist), maxDist);
 
-  camera.position.set(0, yHeight, cameraDist);
-  camera.lookAt(0, 0, 0);
+        // ปรับความสูงกล้องเล็กน้อย
+        const yHeight = Math.min(5, cameraDist * 0.35);
 
-  resize();
-};
+        camera.position.set(0, yHeight, cameraDist);
+        camera.lookAt(0, 0, 0);
 
-
-
+        resize();
+      };
 
       fitModelToScreen();
       window.addEventListener("resize", fitModelToScreen);
@@ -112,15 +113,18 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    style="
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 50vh;
-      width: 100%;
-    "
-  >
-    <div ref="container" style="width: 100%; height: 100%"></div>
-  </div>
+  
+    <div class="relative z-100"
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50vh;
+        width: 100%;
+      "
+    >
+      <div ref="container" class="relative" style="width: 100%; height: 100%"></div>
+      
+    </div>
+  
 </template>
