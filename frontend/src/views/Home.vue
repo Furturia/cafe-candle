@@ -1,5 +1,5 @@
 <script setup>
-import CakeModel from "@/components/CakeModel.vue";
+import CakeModel from '@/components/CakeModel.vue'
 </script>
 
 <template>
@@ -7,7 +7,7 @@ import CakeModel from "@/components/CakeModel.vue";
     class="relative w-full p-8 h-full min-h-screen bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400 overflow-hidden"
   >
     <!-- Wavy layers -->
-    <div class="pointer-events-none  -z-50 absolute inset-0 opacity-30">
+    <div class="pointer-events-none -z-50 absolute inset-0 opacity-30">
       <svg
         class="absolute bottom-0 w-full"
         viewBox="0 0 1440 320"
@@ -77,7 +77,7 @@ import CakeModel from "@/components/CakeModel.vue";
     </div>
 
     <div class="z-50 text-white text-center flex flex-col items-center gap-4">
-      <h1 class=" text-xl md:text-4xl font-bold">SIT 30 TH ANNIVERSARY !</h1>
+      <h1 class="text-xl md:text-4xl font-bold">SIT 30 TH ANNIVERSARY !</h1>
       <p class="text-sm w-full md:text-xl lg:w-[40%]">
         A cozy space for friends, alumni, and the SIT family to create unique
         candle cakes in the workshop, show off their creations, and share warm
@@ -113,16 +113,20 @@ import CakeModel from "@/components/CakeModel.vue";
         </div>
       </div>
       <div class="w-full relative flex items-center justify-center mx-auto">
-        <CakeModel class="pointer-events-none relative overflow-hidden mx-auto" />
+        <CakeModel
+          class="pointer-events-none relative overflow-hidden mx-auto"
+        />
       </div>
     </div>
 
-    <button
-      class="text-lg z-50 cursor-pointer mx-auto text-center px-12 py-4 mt-0 sm:mt-10 rounded-full bg-white text-purple-500 sm:text-xl font-medium flex items-center gap-4 shadow-[0_0_0_4px_rgba(255,255,255,0.4)] hover:shadow-[0_0_0_6px_rgba(255,255,255,0.5)] transition-all duration-300"
-    >
-      Get started
-      <span class="text-2xl">→</span>
-    </button>
+    <RouterLink :to="{ name: 'AllWishes' }">
+      <button
+        class="text-lg z-50 cursor-pointer mx-auto text-center px-12 py-4 mt-0 sm:mt-10 rounded-full bg-white text-purple-500 sm:text-xl font-medium flex items-center gap-4 shadow-[0_0_0_4px_rgba(255,255,255,0.4)] hover:shadow-[0_0_0_6px_rgba(255,255,255,0.5)] transition-all duration-300"
+      >
+        Get started
+        <span class="text-2xl">→</span>
+      </button>
+    </RouterLink>
   </div>
 </template>
 
