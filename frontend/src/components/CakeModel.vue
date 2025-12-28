@@ -114,7 +114,7 @@ onMounted(() => {
 
 <template>
   
-    <div class="relative z-100"
+    <div class="relative z-100 mx-auto"
       style="
         display: flex;
         justify-content: center;
@@ -123,7 +123,7 @@ onMounted(() => {
         width: 100%;
       "
     >
-      <div ref="container" class="relative" style="width: 100%; height: 100%"></div>
+      <div ref="container" class="relative mx-auto max-w-80 sm:max-w-max" style="width: 100%; height: 100%"></div>
       
     </div>
   
