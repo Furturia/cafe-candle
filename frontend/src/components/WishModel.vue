@@ -11,7 +11,11 @@ defineProps({
 </script>
 
 <template>
-  <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div class="mx-auto grid
+      grid-cols-[repeat(auto-fill,minmax(260px,1fr))]
+      gap-6
+      auto-rows-auto
+      [grid-auto-flow:dense]">
     <WishCard 
       v-for="wish in wishes" 
       :key="wish.id" 
