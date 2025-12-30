@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",
+    "imagesloaded": "^5.0.0",
+    "masonry-layout": "^4.2.2",
     "tailwindcss": "^4.1.13",
     "three": "^0.180.0",
     "vue": "^3.5.18",

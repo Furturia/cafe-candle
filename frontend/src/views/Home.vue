@@ -1,5 +1,6 @@
 <script setup>
 import CakeModel from '@/components/CakeModel.vue'
+import { RouterLink } from 'vue-router';
 </script>
 
 <template>
