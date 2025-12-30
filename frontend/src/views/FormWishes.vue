@@ -1,73 +1,77 @@
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 
 const formData = ref({
-  name: '',
+  name: "",
   image: null,
-  blessing: ''
-})
+  blessing: "",
+});
 
-const imagePreview = ref(null)
-const submitted = ref(false)
-const errors = ref({})
+const imagePreview = ref(null);
+const submitted = ref(false);
+const errors = ref({});
 
 const handleImageChange = (event) => {
-  const file = event.target.files[0]
+  const file = event.target.files[0];
   if (file) {
-    formData.value.image = file
-    const reader = new FileReader()
+    formData.value.image = file;
+    const reader = new FileReader();
     reader.onloadend = () => {
-      imagePreview.value = reader.result
-    }
-    reader.readAsDataURL(file)
+      imagePreview.value = reader.result;
+    };
+    reader.readAsDataURL(file);
   }
-}
+};
 
 const removeImage = () => {
-  formData.value.image = null
-  imagePreview.value = null
-}
+  formData.value.image = null;
+  imagePreview.value = null;
+};
 
 const validateForm = () => {
-  errors.value = {}
-  
+  errors.value = {};
+
   if (!formData.value.name.trim()) {
-    errors.value.name = 'กรุณากรอกชื่อของคุณ'
+    errors.value.name = "Please enter your name";
   }
-  
+
   if (!formData.value.blessing.trim()) {
-    errors.value.blessing = 'กรุณาเขียนคำอวยพร'
+    errors.value.blessing = "Please enter your wishes";
   }
-  
-  return Object.keys(errors.value).length === 0
-}
+
+  return Object.keys(errors.value).length === 0;
+};
 
 const handleSubmit = () => {
   if (validateForm()) {
-    submitted.value = true
-    
+    submitted.value = true;
+
     // จำลองการส่งข้อมูล
-    console.log('Form submitted:', {
+    console.log("Form submitted:", {
       name: formData.value.name,
       blessing: formData.value.blessing,
-      hasImage: !!formData.value.image
-    })
-    
+      hasImage: !!formData.value.image,
+    });
+
     // รีเซ็ตฟอร์มหลัง 3 วินาที
     setTimeout(() => {
-      submitted.value = false
-      formData.value = { name: '', image: null, blessing: '' }
-      imagePreview.value = null
-      errors.value = {}
-    }, 3000)
+      submitted.value = false;
+      formData.value = { name: "", image: null, blessing: "" };
+      imagePreview.value = null;
+      errors.value = {};
+    }, 3000);
   }
-}
+};
 </script>
 
 <template>
   <div
     class="relative w-full p-4 sm:p-8 min-h-screen bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400 overflow-hidden"
   >
+    <div class="w-full text-xl text-white font-light text-center mb-4">
+      Cafe Candle
+    </div>
+
     <!-- Wavy layers -->
     <div class="pointer-events-none -z-50 absolute inset-0 opacity-30">
       <svg
@@ -115,14 +119,35 @@ const handleSubmit = () => {
 
     <!-- Main Content -->
     <div class="relative z-10 max-w-2xl mx-auto">
+      <div class="flex gap-1 text-white/70 text-lg mb-8">
+        <RouterLink
+          class="z-50 hover:underline hover:underline-offset-4"
+          :to="{ name: 'home' }"
+        >
+          Home </RouterLink
+        >>
+        <RouterLink
+          class="z-50 hover:underline hover:underline-offset-4"
+          :to="{ name: 'AllWishes' }"
+        >
+          All wishes </RouterLink
+        >>
+        <RouterLink
+          class="z-50 hover:underline hover:underline-offset-4"
+          :to="{ name: 'FormWishes' }"
+        >
+          Write a wish
+        </RouterLink>
+      </div>
       <!-- Header -->
       <div class="text-center mb-8">
         <div class="text-5xl sm:text-6xl mb-4">🕯️</div>
         <h1 class="text-3xl sm:text-4xl font-bold text-white mb-2">
-          อวดเทียนหอม
+          Write a wish
         </h1>
         <p class="text-white/90 text-base sm:text-lg">
-          แชร์เทียนหอมสวยๆ และส่งคำอวยพรให้คณะ SIT
+          A cozy space for friends, alumni, and the SIT family to create unique
+          candle cakes in the workshop, show off their
         </p>
       </div>
 
@@ -137,14 +162,14 @@ const handleSubmit = () => {
             <div class="form-control">
               <label class="label">
                 <span class="label-text text-lg font-semibold text-purple-900">
-                  ชื่อของคุณ
+                  Your Name
                   <span class="text-error">*</span>
                 </span>
               </label>
               <input
                 v-model="formData.name"
                 type="text"
-                placeholder="กรอกชื่อของคุณ"
+                placeholder="Enter your name"
                 class="input input-bordered input-primary w-full"
                 :class="{ 'input-error': errors.name }"
               />
@@ -157,8 +182,10 @@ const handleSubmit = () => {
             <div class="form-control">
               <label class="label">
                 <span class="label-text text-lg font-semibold text-purple-900">
-                  รูปเทียนหอม
-                  <span class="text-sm font-normal text-gray-500">(ไม่บังคับ)</span>
+                  Candle Image
+                  <span class="text-sm font-normal text-gray-500"
+                    >(Optional)</span
+                  >
                 </span>
               </label>
 
@@ -173,8 +200,10 @@ const handleSubmit = () => {
                   class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                 />
                 <div class="text-5xl mb-3">📷</div>
-                <p class="text-purple-700 font-medium">คลิกเพื่ออัพโหลดรูปภาพ</p>
-                <p class="text-sm text-gray-500 mt-1">PNG, JPG, GIF (Max 5MB)</p>
+                <p class="text-purple-700 font-medium">Upload an Image</p>
+                <p class="text-sm text-gray-500 mt-1">
+                  PNG, JPG, GIF (Max 5MB)
+                </p>
               </div>
 
               <div v-else class="relative">
@@ -197,38 +226,36 @@ const handleSubmit = () => {
             <div class="form-control">
               <label class="label">
                 <span class="label-text text-lg font-semibold text-purple-900">
-                  คำอวยพรสำหรับคณะ SIT
+                  Blessings for the SIT
                   <span class="text-error">*</span>
                 </span>
               </label>
               <textarea
                 v-model="formData.blessing"
-                placeholder="เขียนคำอวยพรของคุณที่นี่..."
+                placeholder="Write your wishes here..."
                 class="textarea textarea-bordered textarea-primary h-32 w-full"
                 :class="{ 'textarea-error': errors.blessing }"
               ></textarea>
               <label v-if="errors.blessing" class="label">
-                <span class="label-text-alt text-error">{{ errors.blessing }}</span>
+                <span class="label-text-alt text-error">{{
+                  errors.blessing
+                }}</span>
               </label>
             </div>
 
             <!-- Submit Button -->
             <button
               type="submit"
-              class="btn btn-primary w-full text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+              class="cursor-pointer p-4 bg-linear-to-br from-blue-500 rounded-2xl text-white to-purple-500 w-full text-lg font-semibold shadow-lg hover:shadow-xl transition-all hover:scale-101"
             >
-              <span class="text-xl mr-2">🎉</span>
-              ส่งคำอวยพร
+              Share your wish
             </button>
           </form>
         </div>
       </div>
 
       <!-- Success Message -->
-      <div
-        v-else
-        class="card bg-white/95 backdrop-blur-sm shadow-2xl"
-      >
+      <div v-else class="card bg-white/95 backdrop-blur-sm shadow-2xl">
         <div class="card-body p-8 text-center">
           <div class="text-7xl mb-4 animate-bounce">✨</div>
           <h2 class="text-3xl font-bold text-purple-700 mb-3">
@@ -256,7 +283,8 @@ const handleSubmit = () => {
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -265,7 +293,8 @@ const handleSubmit = () => {
 }
 
 @keyframes bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {

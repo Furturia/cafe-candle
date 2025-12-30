@@ -5,7 +5,7 @@ import AllWishes from "@/views/AllWishes.vue";
 import FormWishes from "@/views/FormWishes.vue";
 
 const routes = [
-  { path: "/", component: Home },
+  { path: "/", component: Home,name: 'home' },
   { path: "/all-wishes", component: AllWishes, name: "AllWishes" },
   { path: "/add", component: FormWishes, name: "FormWishes" },
 ];
