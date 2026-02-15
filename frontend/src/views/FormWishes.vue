@@ -68,9 +68,7 @@ const handleSubmit = () => {
   <div
     class="relative w-full p-4 sm:p-8 min-h-screen bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400 overflow-hidden"
   >
-    <div class="w-full text-xl text-white font-light text-center mb-4">
-      Cafe Candle
-    </div>
+
 
     <!-- Wavy layers -->
     <div class="pointer-events-none -z-50 absolute inset-0 opacity-30">
@@ -119,26 +117,7 @@ const handleSubmit = () => {
 
     <!-- Main Content -->
     <div class="relative z-10 max-w-2xl mx-auto">
-      <div class="flex gap-1 text-white/70 text-lg mb-8">
-        <RouterLink
-          class="z-50 hover:underline hover:underline-offset-4"
-          :to="{ name: 'home' }"
-        >
-          Home </RouterLink
-        >>
-        <RouterLink
-          class="z-50 hover:underline hover:underline-offset-4"
-          :to="{ name: 'AllWishes' }"
-        >
-          All wishes </RouterLink
-        >>
-        <RouterLink
-          class="z-50 hover:underline hover:underline-offset-4"
-          :to="{ name: 'FormWishes' }"
-        >
-          Write a wish
-        </RouterLink>
-      </div>
+
       <!-- Header -->
       <div class="text-center mb-8">
         <div class="text-5xl sm:text-6xl mb-4">🕯️</div>

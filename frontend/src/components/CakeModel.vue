@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import cakeModel from "@/assets/cakefinal2.glb";
+import cakeModel from "@/assets/cakeFinal2.glb";
 
 const container = ref(null);
 const rotate = ref(true);

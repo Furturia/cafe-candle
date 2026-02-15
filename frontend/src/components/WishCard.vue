@@ -3,31 +3,53 @@ defineProps({
   wish: {
     type: Object,
     required: true,
-    validator: (value) => {
-      return value.name && value.message
-    }
   }
 })
+
+defineEmits(['click'])
 </script>
 
 <template>
-  <div class="h-fit bg-linear-to-b from-white/80 to-white/50 backdrop-blur-2xl border-1 border-white rounded-3xl shadow-sm overflow-hidden hover:shadow-xl hover:scale-[1.02] transition-all duration-300 ">
+  <div
+    @click="$emit('click')"
+    class="group h-fit bg-white/90 backdrop-blur-xl rounded-2xl shadow-sm overflow-hidden hover:shadow-xl hover:scale-[1.02] transition-all duration-300 cursor-pointer border border-white/50"
+  >
     <!-- Image Section -->
-    <div v-if="wish.image" class="w-full overflow-hidden p-4 pb-0">
-      <img 
-        :src="wish.image" 
-        class="border-1 border-white w-full h-auto rounded-2xl object-cover"
+    <div v-if="wish.imageUrl" class="w-full overflow-hidden">
+      <img
+        :src="wish.imageUrl"
+        :alt="`${wish.firstName} ${wish.lastName}`"
+        class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
         loading="lazy"
       />
     </div>
 
     <!-- Content Section -->
-    <div class="p-5 text-center">
-      <p class="text-indigo-600 text-base leading-relaxed mb-4">
-        {{ wish.message }}
+    <div class="p-4">
+      <!-- Name -->
+      <h3 class="font-bold text-gray-800 text-sm">
+        {{ wish.firstName }} {{ wish.lastName }}
+      </h3>
+
+      <!-- Generation Badge -->
+      <span class="inline-block mt-1 bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full text-[10px] font-medium">
+        {{ wish.major }}{{ wish.graduationYear }}
+      </span>
+
+      <!-- Description -->
+      <p
+        v-if="wish.description"
+        class="text-gray-500 text-xs leading-relaxed mt-2 line-clamp-3"
+      >
+        {{ wish.description }}
       </p>
-      <p class="text-indigo-600/70 text-sm">
-        - {{ wish.name }} -
+
+      <!-- Heartwarming message preview -->
+      <p
+        v-if="wish.heartwarmingMessage"
+        class="text-purple-500/80 text-[11px] mt-2 italic line-clamp-2"
+      >
+        "{{ wish.heartwarmingMessage }}"
       </p>
     </div>
   </div>
