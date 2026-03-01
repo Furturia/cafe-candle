@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import axios from 'axios'
+import { getSubmissionById } from '@/services/submissionService.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -13,11 +13,10 @@ const errorMessage = ref('')
 onMounted(async () => {
   try {
     const { id } = route.params
-    const response = await axios.get(`/submissions/${id}`)
-    submission.value = response.data
+    submission.value = await getSubmissionById(id)
   } catch (error) {
     console.error('Error fetching submission:', error)
-    if (error.response?.status === 404) {
+    if (error.message === 'ไม่พบข้อมูล') {
       errorMessage.value = 'ไม่พบข้อมูลที่ต้องการ'
     } else {
       errorMessage.value = 'เกิดข้อผิดพลาดในการโหลดข้อมูล'

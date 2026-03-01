@@ -15,9 +15,9 @@ defineEmits(['click'])
     class="group h-fit bg-white/90 backdrop-blur-xl rounded-2xl shadow-sm overflow-hidden hover:shadow-xl hover:scale-[1.02] transition-all duration-300 cursor-pointer border border-white/50"
   >
     <!-- Image Section -->
-    <div v-if="wish.imageUrl" class="w-full overflow-hidden">
+    <div v-if="wish.thumbnailUrl || wish.imageUrl" class="w-full overflow-hidden">
       <img
-        :src="wish.imageUrl"
+        :src="wish.thumbnailUrl || wish.imageUrl"
         :alt="`${wish.firstName} ${wish.lastName}`"
         class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
         loading="lazy"

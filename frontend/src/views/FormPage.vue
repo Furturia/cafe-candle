@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
+import { createSubmission } from '@/services/submissionService.js'
 
 const router = useRouter()
 
@@ -167,22 +167,20 @@ async function submitForm() {
   isLoading.value = true
 
   try {
-    const formData = new FormData()
-    formData.append('firstName', firstName.value.trim())
-    formData.append('lastName', lastName.value.trim())
-    formData.append('graduationYear', graduationYear.value)
-    formData.append('major', major.value)
-    if (description.value) formData.append('description', description.value.trim())
-    formData.append('image', imageFile.value)
+    const data = {
+      firstName: firstName.value.trim(),
+      lastName: lastName.value.trim(),
+      graduationYear: graduationYear.value,
+      major: major.value,
+      description: description.value || null,
+    }
 
-    const response = await axios.post('/submissions', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
+    const result = await createSubmission(data, imageFile.value)
 
-    router.push({ name: 'Success', params: { id: response.data.id } })
+    router.push({ name: 'Success', params: { id: result.id } })
   } catch (error) {
     console.error('Submit error:', error)
-    const message = error.response?.data?.message || 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง'
+    const message = error.message || 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง'
     showErrorModal('เกิดข้อผิดพลาด', message)
   } finally {
     isLoading.value = false

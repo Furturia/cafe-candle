@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import WishCard from "../components/WishCard.vue";
-import axios from "axios";
+import { getAllSubmissions, getSubmissionById } from "@/services/submissionService.js";
 
 const isLoading = ref(true);
 const wishes = ref([]);
@@ -9,23 +9,42 @@ const errorMessage = ref("");
 
 // Modal state for viewing a wish
 const selectedWish = ref(null);
+const isLoadingDetail = ref(false);
 
 const fetchWishes = async () => {
   isLoading.value = true;
   errorMessage.value = "";
   try {
-    const response = await axios.get("/submissions");
-    wishes.value = response.data;
+    wishes.value = await getAllSubmissions();
   } catch (error) {
     console.error("Error fetching wishes:", error);
-    errorMessage.value = "ไม่สามารถโหลดข้อมูลได้ กรุณาลองใหม่อีกครั้ง";
+    if (error?.code === "permission-denied" || error?.message?.includes("permissions")) {
+      wishes.value = [];
+    } else {
+      errorMessage.value = "ไม่สามารถโหลดข้อมูลได้ กรุณาลองใหม่อีกครั้ง";
+    }
   } finally {
     isLoading.value = false;
   }
 };
 
-const openWish = (wish) => {
-  selectedWish.value = wish;
+const openWish = async (wish) => {
+  // Show modal immediately with thumbnail
+  selectedWish.value = { ...wish };
+  // Lazy-load full-size image
+  if (!wish.imageUrl || wish.imageUrl === wish.thumbnailUrl) {
+    isLoadingDetail.value = true;
+    try {
+      const full = await getSubmissionById(wish.id);
+      if (selectedWish.value?.id === wish.id) {
+        selectedWish.value = full;
+      }
+    } catch {
+      // Keep thumbnail if full image fetch fails
+    } finally {
+      isLoadingDetail.value = false;
+    }
+  }
 };
 
 const closeWish = () => {
@@ -161,12 +180,15 @@ onMounted(() => {
               class="bg-white rounded-3xl shadow-2xl overflow-hidden max-w-lg w-full max-h-[90vh] overflow-y-auto"
             >
               <!-- Modal Image -->
-              <div v-if="selectedWish.imageUrl" class="w-full bg-gray-100">
+              <div v-if="selectedWish.imageUrl || selectedWish.thumbnailUrl" class="w-full bg-gray-100 relative">
                 <img
-                  :src="selectedWish.imageUrl"
+                  :src="selectedWish.imageUrl || selectedWish.thumbnailUrl"
                   :alt="`${selectedWish.firstName} ${selectedWish.lastName}`"
                   class="w-full max-h-80 object-cover"
                 />
+                <div v-if="isLoadingDetail" class="absolute inset-0 flex items-center justify-center bg-black/10">
+                  <div class="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                </div>
               </div>
 
               <!-- Modal Content -->
