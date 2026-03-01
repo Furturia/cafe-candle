@@ -114,7 +114,7 @@ onMounted(() => {
 
 <template>
   
-    <div class="relative z-100 mx-auto"
+    <div class="pointer-events-none relative z-10 mx-auto"
       style="
         display: flex;
         justify-content: center;

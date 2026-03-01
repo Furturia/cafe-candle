@@ -9,7 +9,7 @@
  * @param {number} [options.quality=0.7] - JPEG quality (0-1)
  * @returns {Promise<string>} Base64 data URL (image/jpeg)
  */
-export function resizeImage(file, { maxWidth = 1024, maxHeight = 1024, quality = 0.7 } = {}) {
+export function resizeImage(file, { maxWidth = 1024, maxHeight = 1024, quality = 0.8 } = {}) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onerror = () => reject(new Error("ไม่สามารถอ่านไฟล์รูปภาพได้"));
@@ -48,5 +48,5 @@ export function resizeImage(file, { maxWidth = 1024, maxHeight = 1024, quality =
  * @returns {Promise<string>} Base64 data URL (~5-15KB)
  */
 export function createThumbnail(file) {
-  return resizeImage(file, { maxWidth: 300, maxHeight: 300, quality: 0.5 });
+  return resizeImage(file, { maxWidth: 400, maxHeight: 400, quality: 0.7 });
 }

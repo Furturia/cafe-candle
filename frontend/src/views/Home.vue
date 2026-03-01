@@ -35,39 +35,39 @@ import { RouterLink } from 'vue-router';
 
     <!-- Gradient orbs -->
     <div
-      class="absolute top-20 -left-20 w-96 h-96 bg-gradient-to-br from-yellow-300/40 to-pink-300/40 rounded-full blur-3xl animate-pulse"
+      class="pointer-events-none absolute top-20 -left-20 w-96 h-96 bg-gradient-to-br from-yellow-300/40 to-pink-300/40 rounded-full blur-3xl animate-pulse"
       style="animation-duration: 4s"
     ></div>
     <div
-      class="absolute -top-20 right-10 w-80 h-80 bg-gradient-to-br from-blue-300/30 to-purple-300/30 rounded-full blur-3xl animate-pulse"
+      class="pointer-events-none absolute -top-20 right-10 w-80 h-80 bg-gradient-to-br from-blue-300/30 to-purple-300/30 rounded-full blur-3xl animate-pulse"
       style="animation-duration: 5s"
     ></div>
     <div
-      class="absolute bottom-20 right-20 w-72 h-72 bg-gradient-to-br from-pink-300/35 to-purple-300/35 rounded-full blur-3xl animate-pulse"
+      class="pointer-events-none absolute bottom-20 right-20 w-72 h-72 bg-gradient-to-br from-pink-300/35 to-purple-300/35 rounded-full blur-3xl animate-pulse"
       style="animation-duration: 6s"
     ></div>
 
     <!-- Sparkle particles -->
     <div
-      class="absolute top-32 left-1/4 text-3xl opacity-80 animate-pulse"
+      class="pointer-events-none absolute top-32 left-1/4 text-3xl opacity-80 animate-pulse"
       style="animation-duration: 2s"
     >
       ✨
     </div>
     <div
-      class="absolute top-1/3 right-1/4 text-2xl opacity-70 animate-bounce"
+      class="pointer-events-none absolute top-1/3 right-1/4 text-2xl opacity-70 animate-bounce"
       style="animation-duration: 3s"
     >
       ⭐
     </div>
     <div
-      class="absolute bottom-1/3 left-1/3 text-xl opacity-60 animate-pulse"
+      class="pointer-events-none absolute bottom-1/3 left-1/3 text-xl opacity-60 animate-pulse"
       style="animation-duration: 2.5s"
     >
       💫
     </div>
     <div
-      class="z-0 absolute bottom-40 right-1/3 text-2xl opacity-20 animate-bounce"
+      class="pointer-events-none z-0 absolute bottom-40 right-1/3 text-2xl opacity-20 animate-bounce"
       style="animation-duration: 3.5s"
     >
       ✨
@@ -120,9 +120,9 @@ import { RouterLink } from 'vue-router';
       </div>
     </div>
 
-    <RouterLink :to="{ name: 'AllWishes' }">
+    <RouterLink :to="{ name: 'AllWishes' }" class="relative z-[200] block">
       <button
-        class="text-lg z-50 cursor-pointer mx-auto text-center px-12 py-4 mt-0 sm:mt-10 rounded-full bg-white text-purple-500 sm:text-xl font-medium flex items-center gap-4 shadow-[0_0_0_4px_rgba(255,255,255,0.4)] hover:shadow-[0_0_0_6px_rgba(255,255,255,0.5)] transition-all duration-300"
+        class="text-lg cursor-pointer mx-auto text-center px-12 py-4 mt-0 sm:mt-10 rounded-full bg-white text-purple-500 sm:text-xl font-medium flex items-center gap-4 shadow-[0_0_0_4px_rgba(255,255,255,0.4)] hover:shadow-[0_0_0_6px_rgba(255,255,255,0.5)] transition-all duration-300"
       >
         Get started
         <span class="text-2xl">→</span>

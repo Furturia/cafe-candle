@@ -79,7 +79,7 @@ export async function createSubmission(data, imageFile) {
   // Generate thumbnail and full-size image in parallel
   const [thumbnailUrl, imageUrl] = await Promise.all([
     createThumbnail(imageFile),
-    resizeImage(imageFile, { maxWidth: 1024, maxHeight: 1024, quality: 0.7 }),
+    resizeImage(imageFile, { maxWidth: 1024, maxHeight: 1024, quality: 0.8 }),
   ]);
 
   // Save main document with thumbnail (small payload)
