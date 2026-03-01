@@ -1,0 +1,40 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Submissions collection
+    match /submissions/{submissionId} {
+      // Anyone can read submissions
+      allow read: if true;
+
+      // Anyone can create a submission with valid fields
+      allow create: if
+        request.resource.data.keys().hasAll(['firstName', 'lastName', 'graduationYear', 'major', 'thumbnailUrl', 'createdAt'])
+        && request.resource.data.firstName is string
+        && request.resource.data.firstName.size() >= 2
+        && request.resource.data.lastName is string
+        && request.resource.data.lastName.size() >= 2
+        && request.resource.data.graduationYear is int
+        && request.resource.data.graduationYear >= 40
+        && request.resource.data.graduationYear <= 99
+        && request.resource.data.major in ['IT', 'CS', 'DSI']
+        && request.resource.data.thumbnailUrl is string;
+
+      // No updates or deletes allowed
+      allow update, delete: if false;
+
+      // Subcollection for full-size images
+      match /images/{imageId} {
+        allow read: if true;
+        allow create: if request.resource.data.imageUrl is string;
+        allow update, delete: if false;
+      }
+    }
+
+    // Deny access to all other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
